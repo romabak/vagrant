@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/hostfolder/":{"create":true,"guestpath":"/home/vagrant/hostfolder","hostpath":"/mnt/c/Users/roba0619/workfolder/linux/myspace/vagrant/ub1904/test","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/mnt/c/Users/roba0619/workfolder/linux/myspace/vagrant/ub1904","disabled":false,"__vagrantfile":true}}}

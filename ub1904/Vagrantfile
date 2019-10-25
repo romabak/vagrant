@@ -7,6 +7,11 @@ Vagrant.configure("2") do |config|
 	config.vm.provider "virtualbox" do |vb|
     vb.name = "ub1904"
   end
-  # config.ssh.username = "roman"
-  # config.ssh.password = "1234"
+  config.vm.provision "shell", inline: "sudo apt update && sudo apt upgrade -y &&
+    sudo apt install maven -y &&
+    sudo apt install software-properties-common &&
+    sudo apt-add-repository --yes --update ppa:ansible/ansible &&
+    sudo apt install ansible -y &&
+    sudo apt install git -y &&
+    sudo apt install unzip -y"
 end
