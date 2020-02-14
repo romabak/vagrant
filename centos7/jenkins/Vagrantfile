@@ -1,19 +1,25 @@
 Vagrant.configure("2") do |config|
   ssh_key_path = "~/.ssh/"
   config.vm.box = "centos/7"
-  config.vm.network "private_network", ip: "192.168.229.3"
+  config.vm.network "private_network", ip: "192.168.229.4"
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1234
+  end
 
   config.vm.provision "shell", inline: "mkdir -p /home/vagrant/.ssh"
   config.vm.provision "file", source: "#{ ssh_key_path + 'id_rsa.pub' }", destination: "/home/vagrant/.ssh/id_rsa.pub"
   config.vm.provision "file", source: "#{ ssh_key_path + 'id_rsa' }", destination: "/home/vagrant/.ssh/id_rsa"
   config.vm.provision "shell", inline: "cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys"
+
   config.vm.provision "install-jenkins", type: "shell", path: "install_jenkins.sh"
 
-  # config.vm.provision "install-docker", type: "shell", path: "install_docker.sh"
-  # config.vm.provision "ds", type: "shell", inline: "systemctl start docker"
-  # config.vm.provision "jup", type: "shell", inline: <<-Shell
-  #   docker pull jenkins
-  #   docker run -p 8080:8080 -p 50000:50000 jenkins
+  config.vm.provision "cat", type: "shell", inline: "cat /var/lib/jenkins/secrets/initialAdminPassword"
+
+  config.vm.provision "ip1", type: "file", source: "plugins.txt", destination: "~/"
+  config.vm.provision "ip2", type: "file", source: "install_plugins.sh", destination: "~/"
+  # config.vm.provision "ip3", type: "shell", inline:<<-Shell
+  #   chmod +x /home/vagrant/install_plugins.sh
+  #   /home/vagrant/install_plugins.sh < /home/vagrant/plugins.txt #{token}
   # Shell
 
 end

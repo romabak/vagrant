@@ -1,28 +1,27 @@
 #!/bin/bash
 
 yum update -y
-yum install -y git \
-  vim \
-  gcc \
-  unzip \
-  epel-release \
-  net-tools \
-  nc \
-  telnet \
-  lsof \
-  wget \
-  java
-
+yum install wget -y
 wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
 rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
 
-yum install -y jenkins
+yum install -y git \
+  vim \
+  unzip \
+  epel-release \
+  python-pip \
+  net-tools \
+  telnet  \
+  lsof  \
+  java  \
+  jenkins
+
+pip install --upgrade pip
+
+pip install ansible==2.5
 
 service jenkins start
-service jenkins stop
+chkconfig jenkins on
+systemctl status jenkins
 
-sed "s/<useSecurity>true/<useSecurity>false/g" /var/lib/jenkins/config.xml > /var/lib/jenkins/config.xml
-
-java -Djenkins.install.runSetupWizard=false -jar $(find / -name jenkins.war) &
-
-find / -name jenkins-cli.jar
+sleep 1m
