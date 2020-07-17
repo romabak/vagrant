@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
   ssh_key_path = "~/.ssh/"
   config.vm.box = "centos/7"
-  config.vm.network "private_network", ip: "192.168.229.4"
+  config.vm.network "private_network", ip: "192.168.229.3"
   config.vm.provider "virtualbox" do |v|
     v.memory = 1234
   end
@@ -17,6 +17,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ip1", type: "file", source: "plugins.txt", destination: "~/"
   config.vm.provision "ip2", type: "file", source: "install_plugins.sh", destination: "~/"
+
+  config.vm.provision "update", type: "shell", inline: "yum update -y"
+
   # config.vm.provision "ip3", type: "shell", inline:<<-Shell
   #   chmod +x /home/vagrant/install_plugins.sh
   #   /home/vagrant/install_plugins.sh < /home/vagrant/plugins.txt #{token}

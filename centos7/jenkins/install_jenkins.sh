@@ -21,6 +21,7 @@ pip install --upgrade pip
 pip install ansible==2.5
 
 service jenkins start
+systemctl enable jenkins
 chkconfig jenkins on
 systemctl status jenkins
 
