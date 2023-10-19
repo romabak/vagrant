@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-22.04"
+  # config.vm.box_version = "201906.18.0"
+  config.vm.hostname = "ubuntu2204"
+  config.vm.network :private_network, ip: "192.168.229.5"
+  config.vm.synced_folder "test/", "/home/vagrant/hostfolder/", create: true
+	config.vm.provider "virtualbox" do |vb|
+    vb.name = "jenkins"
+  end
+  # config.vm.provision "shell", inline: "sudo apt update && sudo apt upgrade -y &&
+  #   sudo apt install maven -y &&
+  #   sudo apt install software-properties-common &&
+  #   sudo apt-add-repository --yes --update ppa:ansible/ansible &&
+  #   sudo apt install ansible -y &&
+  #   sudo apt install git -y &&
+  #   sudo apt install unzip -y"
+  config.vm.provision "install-jenkins", type: "shell", path: "../ubuntu/install_jenkins.sh"
+
+end
